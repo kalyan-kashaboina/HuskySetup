@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 echo "Running Typecheck and Linting..."
-npm run typecheck && npm run lint
+npm run typecheck
+npm run lint
+echo "✅ All checks passed!"
