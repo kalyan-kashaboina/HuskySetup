@@ -18,33 +18,25 @@ Navigate into your project folder
 
 Install dependencies:
 
-bash
-Copy
-Edit
+
 npm install
 2. Add TypeScript Type Check Script
 Add this script to your package.json under "scripts":
 
-json
-Copy
-Edit
+
 "typecheck": "tsc --build --noEmit"
 This runs TypeScript in build mode and checks for type errors without generating output files.
 
 3. Install and Setup Husky
 Run the following commands to initialize Husky and install dependencies:
 
-bash
-Copy
-Edit
+
 npx husky-init
 npm install
 4. Configure Husky Pre-commit Hook
 Edit the .husky/pre-commit file to include:
 
-sh
-Copy
-Edit
+
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
@@ -54,24 +46,18 @@ This hook ensures that type checking and linting run before every commit. If eit
 Usage
 Run type checking manually:
 
-bash
-Copy
-Edit
+
 npm run typecheck
 Run linting manually:
 
-bash
-Copy
-Edit
+
 npm run lint
 Commit your changes as usual; Husky will automatically run the type check and lint scripts before committing.
 
 Notes
 Make sure your tsconfig.app.json (or main tsconfig) includes your source files, usually with:
 
-json
-Copy
-Edit
+
 "include": ["src"]
 You can customize Husky hooks to add other checks or formatters like Prettier or lint-staged if desired.
 
