@@ -40,9 +40,12 @@ Edit the .husky/pre-commit file to include:
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 echo "Running Typecheck and Linting..."
-npm run typecheck
-npm run lint
-echo "✅ All checks passed!"
+
+npm run typecheck && npm run lint && echo "✅ All checks passed!" || {
+  echo "❌ Typecheck or Linting failed. Please fix the issues before committing."
+  exit 1
+}
+
 
 This hook ensures that type checking and linting run before every commit. If either fails, the commit will be blocked.
 
