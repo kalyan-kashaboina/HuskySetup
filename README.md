@@ -1,54 +1,87 @@
-# React + TypeScript + Vite
+# React + TypeScript + Vite + Husky Setup
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a minimal React app created with Vite, configured with TypeScript and Husky to enforce type checking and linting before commits.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Getting Started
 
-## Expanding the ESLint configuration
+### 1. Create React Project with Vite
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```bash
+npm create vite@latest
+Enter your project name
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Select the React + TypeScript template
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Navigate into your project folder
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Install dependencies:
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+bash
+Copy
+Edit
+npm install
+2. Add TypeScript Type Check Script
+Add this script to your package.json under "scripts":
+
+json
+Copy
+Edit
+"typecheck": "tsc --build --noEmit"
+This runs TypeScript in build mode and checks for type errors without generating output files.
+
+3. Install and Setup Husky
+Run the following commands to initialize Husky and install dependencies:
+
+bash
+Copy
+Edit
+npx husky-init
+npm install
+4. Configure Husky Pre-commit Hook
+Edit the .husky/pre-commit file to include:
+
+sh
+Copy
+Edit
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npm run typecheck && npm run lint
+This hook ensures that type checking and linting run before every commit. If either fails, the commit will be blocked.
+
+Usage
+Run type checking manually:
+
+bash
+Copy
+Edit
+npm run typecheck
+Run linting manually:
+
+bash
+Copy
+Edit
+npm run lint
+Commit your changes as usual; Husky will automatically run the type check and lint scripts before committing.
+
+Notes
+Make sure your tsconfig.app.json (or main tsconfig) includes your source files, usually with:
+
+json
+Copy
+Edit
+"include": ["src"]
+You can customize Husky hooks to add other checks or formatters like Prettier or lint-staged if desired.
+
+Resources
+Vite Documentation
+
+TypeScript Documentation
+
+Husky Documentation
+
+ESLint Documentation
+
+Happy coding! 🚀
