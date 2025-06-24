@@ -27,6 +27,41 @@ Add this script to your package.json under "scripts":
 "typecheck": "tsc --build --noEmit"
 This runs TypeScript in build mode and checks for type errors without generating output files.
 
+
+ ###Install and Set Up Prettier
+bash
+Copy
+Edit
+npm install --save-dev prettier
+Add a Prettier config:
+
+.prettierrc
+json
+Copy
+Edit
+{
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "printWidth": 100,
+  "tabWidth": 2
+}
+.prettierignore
+
+node_modules
+dist
+build
+coverage
+Add format scripts to package.json:
+
+
+"scripts": {
+  "format": "prettier --check .",
+  "format:fix": "prettier --write ."
+   },
+
+
+
 3. Install and Setup Husky
 Run the following commands to initialize Husky and install dependencies:
 
@@ -39,10 +74,11 @@ Edit the .husky/pre-commit file to include:
 
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
-echo "Running Typecheck and Linting..."
 
-npm run typecheck && npm run lint && echo "✅ All checks passed!" || {
-  echo "❌ Typecheck or Linting failed. Please fix the issues before committing."
+echo "🔍 Running Typecheck, Linting, and Prettier (with auto-fix)..."
+
+npm run typecheck && npm run lint && npm run format:fix && echo "✅ All checks passed!" || {
+  echo "❌ Typecheck, Linting, or Prettier failed. Please fix the issues before committing."
   exit 1
 }
 
@@ -77,3 +113,4 @@ Husky Documentation
 ESLint Documentation
 
 Happy coding! 🚀
+```

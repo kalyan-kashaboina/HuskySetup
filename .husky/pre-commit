@@ -1,8 +1,9 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
-echo "Running Typecheck and Linting..."
 
-npm run typecheck && npm run lint && echo "✅ All checks passed!" || {
-  echo "❌ Typecheck or Linting failed. Please fix the issues before committing."
+echo "🔍 Running Typecheck, Linting, and Prettier (with auto-fix)..."
+
+npm run typecheck && npm run lint && npm run format:fix && echo "✅ All checks passed!" || {
+  echo "❌ Typecheck, Linting, or Prettier failed. Please fix the issues before committing."
   exit 1
 }
