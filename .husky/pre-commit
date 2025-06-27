@@ -1,9 +1,13 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-echo "🔍 Running Typecheck, Linting, and Prettier (with auto-fix)..."
+echo "🔍 Running typecheck and lint-staged..."
 
-npm run typecheck && npm run lint && npm run format:fix && echo "✅ All checks passed!" || {
-  echo "❌ Typecheck, Linting, or Prettier failed. Please fix the issues before committing."
+npm run precommit
+
+if [ $? -eq 0 ]; then
+  echo "✅ All checks passed. Proceeding with commit."
+else
+  echo "❌ Checks failed. Commit aborted."
   exit 1
-}
+fi
